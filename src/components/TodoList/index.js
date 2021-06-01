@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, deleteTodo } from '../../store/todoList/actions';
 import moment from 'moment';
@@ -12,30 +12,52 @@ const TodoList = () => {
   const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todos);
   const [storedTodos, setStoredTodos] = useState([]);
-
-  useEffect(() => {
-    setStoredTodos(JSON.parse(localStorage.getItem('todos')));
-  }, [todos]);
-
   const [todo, setTodo] = useState({
     id: 1,
     text: '',
     created: moment().format('DD-MM-YYYY'),
   });
 
+  const validationAlert = [
+    { isEnglish: Boolean(todo.text.match('^[a-zA-Z]*$')) },
+    { isEmpty: Boolean(todo.text !== '') },
+  ];
+
+  const errors = {
+    isEnglish: 'eng characters only',
+    isEmpty: "todo can't be an empty sting",
+  };
+
+  const displayAlerts = () => {
+    const result = validationAlert.filter(
+      (item) => item[Object.keys(item)] !== true
+    );
+    const displayedAlerts = result.filter(
+      (item) => Object.keys(item) !== Object.keys(errors)
+    );
+
+    return displayedAlerts.map((item) => errors[Object.keys(item)]);
+  };
+
+  useEffect(() => {
+    setStoredTodos(JSON.parse(localStorage.getItem('todos')));
+  }, [todos]);
+
   const inputOnChangeHandler = (e) => {
     setTodo((prev) => ({ ...prev, text: e.target.value }));
   };
 
   const addTodoHandler = () => {
-    setTodo((prev) => ({
-      ...prev,
-      id: prev.id + 1,
-    }));
+    if (todo.text.trim() !== '' && displayAlerts() == false) {
+      setTodo((prev) => ({
+        ...prev,
+        id: prev.id + 1,
+      }));
 
-    dispatch(addTodo(todo));
-    localStorage.setItem('todos', JSON.stringify([...todos, todo]));
-    setTodo((prev) => ({ ...prev, text: '' }));
+      dispatch(addTodo(todo));
+      localStorage.setItem('todos', JSON.stringify([...todos, todo]));
+      setTodo((prev) => ({ ...prev, text: '' }));
+    }
   };
 
   const removeTodoHandler = (id) => {
@@ -59,8 +81,11 @@ const TodoList = () => {
             value={todo.text}
           />
         </div>
+
         <CustomButton onClick={addTodoHandler} title="ADD TODO" />
       </div>
+      <div>{displayAlerts()}</div>
+
       <div className="todo-list-list-wrapper">
         {storedTodos?.map((item, index) => (
           <div
