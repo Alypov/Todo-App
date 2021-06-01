@@ -32,10 +32,10 @@ const TodoList = () => {
   };
 
   const displayAlerts = () => {
-    const result = validationAlert.filter(
+    const triggeredAlerts = validationAlert.filter(
       (item) => item[Object.keys(item)] !== true
     );
-    const displayedAlerts = result.filter(
+    const displayedAlerts = triggeredAlerts.filter(
       (item) => Object.keys(item) !== Object.keys(errors)
     );
 
@@ -49,8 +49,6 @@ const TodoList = () => {
   const inputOnChangeHandler = (e) => {
     setTodo((prev) => ({ ...prev, text: e.target.value }));
   };
-
-  // TO DO ID
 
   const addTodoHandler = () => {
     if (todo.text.trim() !== '' && displayAlerts() == false) {
