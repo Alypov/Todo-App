@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, deleteTodo } from '../../store/todoList/actions';
 import moment from 'moment';
 import CustomButton from '../CustomButton';
+import uuid from 'react-uuid';
 
 import CustomInput from '../CustomInput';
 import TodoItem from '../TodoItem';
@@ -11,9 +12,11 @@ import './styles.scss';
 const TodoList = () => {
   const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todos);
-  const [storedTodos, setStoredTodos] = useState([]);
+  const [storedTodos, setStoredTodos] = useState(
+    JSON.parse(localStorage.getItem('todos'))
+  );
   const [todo, setTodo] = useState({
-    id: 1,
+    id: uuid(),
     text: '',
     created: moment().format('DD-MM-YYYY'),
   });
@@ -47,21 +50,23 @@ const TodoList = () => {
     setTodo((prev) => ({ ...prev, text: e.target.value }));
   };
 
+  // TO DO ID
+
   const addTodoHandler = () => {
     if (todo.text.trim() !== '' && displayAlerts() == false) {
       setTodo((prev) => ({
         ...prev,
-        id: prev.id + 1,
+        id: uuid(),
       }));
 
       dispatch(addTodo(todo));
-      localStorage.setItem('todos', JSON.stringify([...todos, todo]));
+      localStorage.setItem('todos', JSON.stringify([...storedTodos, todo]));
       setTodo((prev) => ({ ...prev, text: '' }));
     }
   };
 
   const removeTodoHandler = (id) => {
-    const filteredArray = todos.filter((item) => item.id !== id);
+    const filteredArray = storedTodos.filter((item) => item.id !== id);
     dispatch(deleteTodo(filteredArray));
     setStoredTodos(
       localStorage.setItem('todos', JSON.stringify(filteredArray))
