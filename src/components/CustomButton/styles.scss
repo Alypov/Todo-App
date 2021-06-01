@@ -1,0 +1,36 @@
+@import '../../assets/colors.scss';
+
+@keyframes colorChange {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.custom-button-wrapper {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid black;
+  .custom-button {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    background: $add-button-color;
+  }
+  :hover {
+    background: $button-color;
+    background-size: 400% 400%;
+    animation: colorChange 3s ease-in-out infinite;
+  }
+}
