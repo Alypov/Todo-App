@@ -3,6 +3,9 @@ export const addTodo = (payload) => {
   return {
     type: ADD_TODO,
     payload,
+    meta: {
+      asPromise: true,
+    },
   };
 };
 

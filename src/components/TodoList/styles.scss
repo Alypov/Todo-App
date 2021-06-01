@@ -16,11 +16,13 @@
 
   .todo-list-input-wrapper {
     margin-right: 16px;
+    display: flex;
   }
 
-  .todo-list-render-wrapper {
+  .todo-item-render-wrapper {
     margin-top: 30px;
-    padding: 0px 10px;
+    padding-left: 10px;
+
     width: 286px;
     height: 48px;
     display: flex;

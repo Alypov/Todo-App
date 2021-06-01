@@ -1,10 +1,15 @@
 import React from 'react';
 import './styles.scss';
 
-const CustomButton = ({ title, onClick }) => {
+const CustomButton = ({ title, onClick, width, height }) => {
   return (
-    <div className="custom-button-wrapper">
-      <div className='custom-button' onClick={onClick}>{title}</div>
+    <div
+      style={{ width: width, height: height }}
+      className="custom-button-wrapper"
+    >
+      <div className="custom-button" onClick={onClick}>
+        {title}
+      </div>
     </div>
   );
 };

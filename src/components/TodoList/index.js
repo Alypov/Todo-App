@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addTodo,
-  deleteTodo,
-  setCompleteTodo,
-} from '../../store/todoList/actions';
+import { addTodo, deleteTodo } from '../../store/todoList/actions';
+import moment from 'moment';
 import CustomButton from '../CustomButton';
-import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
+
 import CustomInput from '../CustomInput';
 import TodoItem from '../TodoItem';
 import './styles.scss';
@@ -14,35 +11,39 @@ import './styles.scss';
 const TodoList = () => {
   const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todos);
+  const [storedTodos, setStoredTodos] = useState([]);
+
+  useEffect(() => {
+    setStoredTodos(JSON.parse(localStorage.getItem('todos')));
+  }, [todos]);
 
   const [todo, setTodo] = useState({
     id: 1,
     text: '',
-    isComplete: false,
-    created: '',
+    created: moment().format('DD-MM-YYYY'),
   });
 
   const inputOnChangeHandler = (e) => {
     setTodo((prev) => ({ ...prev, text: e.target.value }));
   };
 
-  const onClickButtonHandler = () => {
-    setTodo((prev) => ({ ...prev, id: prev.id + 1 }));
+  const addTodoHandler = () => {
+    setTodo((prev) => ({
+      ...prev,
+      id: prev.id + 1,
+    }));
+
     dispatch(addTodo(todo));
+    localStorage.setItem('todos', JSON.stringify([...todos, todo]));
+    setTodo((prev) => ({ ...prev, text: '' }));
   };
 
   const removeTodoHandler = (id) => {
     const filteredArray = todos.filter((item) => item.id !== id);
     dispatch(deleteTodo(filteredArray));
-  };
-
-  const setDone = (e, id) => {
-    const result = todos.find((item) => item.id === id);
-    const filteredArray = todos.filter((item) => item.id !== id);
-
-    setTodo({ ...result, isComplete: !todo.isComplete });
-    console.log(todo);
-    // dispatch(setCompleteTodo([...filteredArray, todo]));
+    setStoredTodos(
+      localStorage.setItem('todos', JSON.stringify(filteredArray))
+    );
   };
 
   return (
@@ -58,33 +59,28 @@ const TodoList = () => {
             value={todo.text}
           />
         </div>
-        <CustomButton onClick={onClickButtonHandler} title="ADD TODO" />
+        <CustomButton onClick={addTodoHandler} title="ADD TODO" />
       </div>
       <div className="todo-list-list-wrapper">
-        {todos?.map((item, index) => (
-          <div className="todo-list-render-wrapper" key={index}>
+        {storedTodos?.map((item, index) => (
+          <div
+            className={`todo-item-render-wrapper${
+              item.isComplete ? '-checked' : ''
+            }`}
+            key={index}
+          >
             <TodoItem
               text={item.text}
               isComplete={item.isComplete}
               created={item.created}
             />
-            {item.isComplete ? (
-              <div>
-                <CustomButton
-                  onClick={() => removeTodoHandler(item.id)}
-                  title="Remove Todo"
-                />
-                <CustomCheckbox
-                  checked={item.isComplete}
-                  onChange={(e) => setDone(e, item.id)}
-                />
-              </div>
-            ) : (
-              <CustomCheckbox
-                checked={item.isComplete}
-                onChange={(e) => setDone(e, item.id)}
-              />
-            )}
+
+            <CustomButton
+              width={90}
+              height={'100%'}
+              onClick={() => removeTodoHandler(item.id)}
+              title="Remove"
+            />
           </div>
         ))}
       </div>
