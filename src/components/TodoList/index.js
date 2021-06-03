@@ -23,7 +23,7 @@ const TodoList = () => {
   });
 
   const validationAlert = [
-    { isEnglish: Boolean(todo.text.match('^[a-zA-Z]*$')) },
+    { isEnglish: Boolean(todo.text.match('^[A-Za-z0-9]+$')) },
     { isEmpty: Boolean(todo.text !== '') },
   ];
 
@@ -93,7 +93,11 @@ const TodoList = () => {
           />
         </div>
       </div>
-      <div>{displayAlerts()}</div>
+      <div className="todo-input-alert-wrapper">
+        {displayAlerts().map((alert) => (
+          <div>{alert}</div>
+        ))}
+      </div>
 
       <div className="todo-list-list-wrapper">
         {storedTodos?.map((item, index) => (

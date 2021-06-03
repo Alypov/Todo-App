@@ -32,6 +32,16 @@
     display: flex;
   }
 
+  .todo-input-alert-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: $font-todos;
+    top: calc(100vh - 45%);
+    color: #89fffd;
+  }
   .todo-list-add-todo-button {
     display: flex;
     justify-content: center;
@@ -52,11 +62,14 @@
     justify-content: flex-start;
     align-items: center;
     position: fixed;
-    top: calc(100vh - 45%);
-    height: 248px;
+    top: calc(100vh - 42%);
+    height: 236px;
     width: 400px;
     overflow-x: hidden;
     overflow-y: auto;
+    :first-child {
+      margin-top: 0px;
+    }
   }
 
   .todo-item-render-wrapper {
