@@ -1,3 +1,28 @@
+@import '../../assets/styles/animation.scss';
+@import '../../assets/styles/colors.scss';
+
 .todo-item-title-wrapper {
-  overflow-wrap: break-word;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.todo-item-main-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.todo-item-button-wrapper {
+  height: 100%;
+  :hover {
+    background: $remove;
+    background-size: 400% 400%;
+    animation: $buttonAnimation 3s ease-in-out infinite;
+  }
 }

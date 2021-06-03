@@ -3,5 +3,10 @@
   src: url(Invasion/INVASION2000.TTF);
 }
 
+@font-face {
+  font-family: 'kongtext';
+  src: url(Kongtext/kongtext.ttf);
+}
+
 $font-title: 'INVASION2000';
-// $font-todos: '';
+$font-todos: 'kongtext';

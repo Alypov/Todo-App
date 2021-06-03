@@ -5,8 +5,14 @@ $button-color: linear-gradient(
   rgba(249, 255, 113, 1) 100%
 );
 
-$add-button-color: rgba(255, 156, 139, 1);
+$add-button-color: linear-gradient(to right, #f2994a, #f2c94c);
 
-$todo-list-background: rgba(255, 247, 117, 1);
+$todo-list-background: linear-gradient(to right, #f2994a, #f2c94c);
 
 $checked-todo: #b3b3b3;
+
+$scrollbar-track: rgba(255, 255, 255, 0.12);
+$neon: #b3ffab;
+$neon-5: rgba(179, 255, 171, 0.5);
+$input-background: rgba(0, 201, 255, 0.5);
+$remove: linear-gradient(to right, #f00000, #dc281e);

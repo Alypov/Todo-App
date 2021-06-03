@@ -8,6 +8,7 @@ import uuid from 'react-uuid';
 import CustomInput from '../CustomInput';
 import TodoItem from '../TodoItem';
 import './styles.scss';
+import { COLORS } from '../../constants/COLORS';
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -84,8 +85,13 @@ const TodoList = () => {
             value={todo.text}
           />
         </div>
-
-        <CustomButton onClick={addTodoHandler} title="ADD TODO" />
+        <div className="todo-list-add-todo-button">
+          <CustomButton
+            color={COLORS.addButton}
+            onClick={addTodoHandler}
+            title="ADD TODO"
+          />
+        </div>
       </div>
       <div>{displayAlerts()}</div>
 
@@ -93,16 +99,11 @@ const TodoList = () => {
         {storedTodos?.map((item, index) => (
           <div className="todo-item-render-wrapper" key={index}>
             <TodoItem
+              item={item}
               text={item.text}
               isComplete={item.isComplete}
               created={item.created}
-            />
-
-            <CustomButton
-              width={90}
-              height={'100%'}
-              onClick={() => removeTodoHandler(item.id)}
-              title="Remove"
+              removeTodoHandler={removeTodoHandler}
             />
           </div>
         ))}

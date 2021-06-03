@@ -1,4 +1,10 @@
-@keyframes color-change {
+// linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+
+$titleAnimation: title-color-change;
+$inputBackgroundAnimation: background-color-change;
+$buttonAnimation: button-color-change;
+
+@keyframes title-color-change {
   0% {
     color: #00c9ff;
   }
@@ -10,7 +16,27 @@
     color: #00c9ff;
   }
 }
+@keyframes background-color-change {
+  0% {
+    background-color: #00c9ff;
+  }
 
-// linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+  50% {
+    background-color: #b3ffab;
+  }
+  100% {
+    background-color: #00c9ff;
+  }
+}
 
-$titleAnimation: color-change;
+@keyframes button-color-change {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

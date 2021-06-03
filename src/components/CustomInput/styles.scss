@@ -1,4 +1,25 @@
-.custom-input-main-wrapper{
+@import '../../assets/styles/animation.scss';
+@import '../../assets/styles/colors.scss';
+@import '../../assets/fonts/index.scss';
 
-    
+.custom-input-main-wrapper {
+  max-width: 400px;
+  width: calc(100wv - 50%);
+  ::placeholder {
+    color: $neon;
+  }
+
+  :hover {
+    box-shadow: 0px 0px 12px 10px #b3ffab;
+  }
+}
+
+.ant-input {
+  font-family: $font-todos;
+  font-size: 0.4rem;
+  border: none;
+  outline: none;
+  background-color: $input-background;
+  color: #b3ffab;
+  padding-left: 20px;
 }

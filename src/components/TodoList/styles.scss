@@ -5,19 +5,21 @@
 .todo-list-main-wrapper {
   position: relative;
   background-color: rgba(0, 0, 0, 0.2);
-
+  background-blend-mode: hue;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-
+  cursor: url('https://i.pinimg.com/originals/d6/3f/5d/d63f5d0fab77dc1c345344cc0610fd2f.png'),
+    auto;
   .todo-list-title {
     font-size: 3rem;
 
     font-family: $font-title;
     height: 5vh;
     min-height: 64px;
+
     animation: $titleAnimation 3s ease-in-out infinite;
   }
 
@@ -30,10 +32,24 @@
     display: flex;
   }
 
+  .todo-list-add-todo-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+    :hover {
+      background: linear-gradient(to right, #ef32d9, #89fffd);
+      background-size: 400% 400%;
+      animation: $buttonAnimation 3s ease-in-out infinite;
+    }
+  }
+
   .todo-list-list-wrapper {
+    font-family: $font-todos;
+    font-size: 0.6rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: fixed;
     top: calc(100vh - 45%);
@@ -44,14 +60,16 @@
   }
 
   .todo-item-render-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 30px;
     padding-left: 10px;
-    width: 286px;
-    height: 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 286px;
+    width: 100%;
+    min-height: 48px;
+
     border: 1px solid black;
-    background-color: $todo-list-background;
+    background: $todo-list-background;
   }
 }
