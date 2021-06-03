@@ -1,13 +1,24 @@
-@import '../../assets/colors.scss';
+@import '../../assets/styles/colors.scss';
+@import '../../assets/fonts/index.scss';
+@import '../../assets/styles/animation.scss';
+
 .todo-list-main-wrapper {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 
   .todo-list-title {
     font-size: 3rem;
-    padding: 40px 60px;
+
+    font-family: $font-title;
+    height: 5vh;
+    min-height: 64px;
+    animation: $titleAnimation 3s ease-in-out infinite;
   }
 
   .todo-list-input-with-button-wrapper {
@@ -19,10 +30,22 @@
     display: flex;
   }
 
+  .todo-list-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: calc(100vh - 45%);
+    height: 248px;
+    width: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   .todo-item-render-wrapper {
     margin-top: 30px;
     padding-left: 10px;
-
     width: 286px;
     height: 48px;
     display: flex;

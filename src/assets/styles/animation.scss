@@ -1,0 +1,16 @@
+@keyframes color-change {
+  0% {
+    color: #00c9ff;
+  }
+
+  50% {
+    color: #b3ffab;
+  }
+  100% {
+    color: #00c9ff;
+  }
+}
+
+// linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+
+$titleAnimation: color-change;

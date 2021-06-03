@@ -79,7 +79,7 @@ const TodoList = () => {
           <CustomInput
             height={36}
             width={300}
-            placeholder="Enter your todo"
+            placeholder="What are you going to do now?"
             onChange={(e) => inputOnChangeHandler(e)}
             value={todo.text}
           />
@@ -91,12 +91,7 @@ const TodoList = () => {
 
       <div className="todo-list-list-wrapper">
         {storedTodos?.map((item, index) => (
-          <div
-            className={`todo-item-render-wrapper${
-              item.isComplete ? '-checked' : ''
-            }`}
-            key={index}
-          >
+          <div className="todo-item-render-wrapper" key={index}>
             <TodoItem
               text={item.text}
               isComplete={item.isComplete}
