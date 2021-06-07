@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo } from '../../store/todoList/actions';
+import { addTodo, deleteTodo, getTodos } from '../../store/todoList/actions';
 import moment from 'moment';
 import CustomButton from '../CustomButton';
 import uuid from 'react-uuid';
@@ -22,33 +22,44 @@ const TodoList = () => {
     created: moment().format('DD-MM-YYYY'),
   });
 
-  const validationAlert = [
-    { isEnglish: Boolean(todo.text.match('^[A-Za-z0-9]+$')) },
-    { isEmpty: Boolean(todo.text !== '') },
-  ];
+  const [validationAlert, setValidationAlert] = useState([
+    // { isEnglish: Boolean(todo.text.match('^[A-Za-z0-9]+$')) },
+    { isEmpty: false },
+  ]);
 
   const errors = {
-    isEnglish: 'eng characters only',
+    // isEnglish: 'eng characters only',
     isEmpty: "todo can't be an empty sting",
   };
 
   const displayAlerts = () => {
     const triggeredAlerts = validationAlert.filter(
-      (item) => item[Object.keys(item)] !== true
+      (item) => item[Object.keys(item)[1]] === true
     );
+
     const displayedAlerts = triggeredAlerts.filter(
-      (item) => Object.keys(item) !== Object.keys(errors)
+      (item) => Object.keys(item)[1] === Object.keys(errors)[0]
     );
 
     return displayedAlerts.map((item) => errors[Object.keys(item)]);
   };
 
   useEffect(() => {
-    setStoredTodos(JSON.parse(localStorage.getItem('todos')));
-  }, [todos]);
+    if (!JSON.parse(localStorage.getItem('todos'))) {
+      localStorage.setItem('todos', '[]');
+    }
+    dispatch(getTodos(localStorage.getItem('todos')));
+  }, []);
 
   const inputOnChangeHandler = (e) => {
-    setTodo((prev) => ({ ...prev, text: e.target.value }));
+    if (e.target.value === '') {
+      // setValidationAlert((prev) => [{ ...prev, isEmpty: true }]);
+      setValidationAlert((prev) => [...prev, { isEmpty: true }]);
+      setTodo((prev) => ({ ...prev, text: e.target.value }));
+    } else {
+      setTodo((prev) => ({ ...prev, text: e.target.value }));
+      setValidationAlert((prev) => [...prev, { isEmpty: true }]);
+    }
   };
 
   const addTodoHandler = () => {
@@ -59,17 +70,15 @@ const TodoList = () => {
       }));
 
       dispatch(addTodo(todo));
-      localStorage.setItem('todos', JSON.stringify([...storedTodos, todo]));
+      localStorage.setItem('todos', JSON.stringify([...todos, todo]));
       setTodo((prev) => ({ ...prev, text: '' }));
     }
   };
 
   const removeTodoHandler = (id) => {
-    const filteredArray = storedTodos.filter((item) => item.id !== id);
+    const filteredArray = todos.filter((item) => item.id !== id);
     dispatch(deleteTodo(filteredArray));
-    setStoredTodos(
-      localStorage.setItem('todos', JSON.stringify(filteredArray))
-    );
+    localStorage.setItem('todos', JSON.stringify(filteredArray));
   };
 
   return (
@@ -100,9 +109,10 @@ const TodoList = () => {
       </div>
 
       <div className="todo-list-list-wrapper">
-        {storedTodos?.map((item, index) => (
+        {todos?.map((item, index) => (
           <div className="todo-item-render-wrapper" key={index}>
             <TodoItem
+              index={index}
               item={item}
               text={item.text}
               isComplete={item.isComplete}

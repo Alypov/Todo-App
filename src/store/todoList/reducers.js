@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, SET_COMPLETE } from './actions';
+import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_COMPLETE } from './actions';
 
 const initialState = {
   todos: [],
@@ -7,6 +7,12 @@ const initialState = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_TODOS: {
+      return {
+        ...state,
+        todos: [...action.payload],
+      };
+    }
     case ADD_TODO: {
       return {
         ...state,
@@ -20,10 +26,9 @@ export default (state = initialState, action) => {
       };
     }
     case SET_COMPLETE: {
-
       return {
         ...state,
-        todos: action.payload
+        todos: action.payload,
       };
     }
     default:

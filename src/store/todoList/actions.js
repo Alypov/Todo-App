@@ -1,3 +1,11 @@
+export const GET_TODOS = 'GET_TODOS';
+export const getTodos = () => {
+  return {
+    type: GET_TODOS,
+    payload: JSON.parse(localStorage.getItem('todos')),
+  };
+};
+
 export const ADD_TODO = 'ADD_TODO';
 export const addTodo = (payload) => {
   return {

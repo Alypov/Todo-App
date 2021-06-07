@@ -2,7 +2,7 @@ import React from 'react';
 import { COLORS } from '../../constants/COLORS';
 import CustomButton from '../CustomButton';
 import './styles.scss';
-const TodoItem = ({ text, item, removeTodoHandler }) => {
+const TodoItem = ({ text, item, removeTodoHandler, index }) => {
   return (
     <div className="todo-item-main-wrapper">
       <div className="todo-item-title-wrapper">{text}</div>
